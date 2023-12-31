@@ -1,0 +1,11 @@
+command /euros <text> <player> <number>:
+	permission: lowaadmin.sk
+	trigger:
+		if arg 1 is "argent":
+			add arg-3 to {argent.%UUID of arg-2%}
+			message "&aVous avez ajouté €%arg 3% à %arg 2%"
+			send "&a€%arg 3% à été ajouté à votre compte"
+		if arg 1 is "tokens":
+			add arg-3 to {tokens.%UUID of arg-2%}
+			message "&aVous avez ajouté ★%arg 3% à %arg 2%"
+			send "&a★%arg 3% à été ajouté à votre compte"	
