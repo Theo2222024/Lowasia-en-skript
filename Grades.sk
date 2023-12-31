@@ -1,0 +1,128 @@
+command /grade [<player>] [<text>]:  
+	permission: grade.use
+	permission message : &cVous n'avez pas la permission de faire cette commande ! 
+	trigger:
+		if arg 1 is set:
+			if arg 2 is "lowasien":
+				set {grade.joueur.%uuid of arg 1%} to true
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				execute console command "/prefix %arg 1% &7Lowasien"
+			if arg 2 is "jizamurai" or "guide":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to true
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				execute console command "/prefix %arg 1% &1Jizamurai"
+			if arg 2 is "musha":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to true
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				execute console command "/prefix %arg 1% &dMusha"
+			if arg 2 is "Ashigaru":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to true
+				set {grade.admin.%uuid of arg 1%} to false
+				execute console command "/prefix %arg 1% &aAshigaru"
+			if arg 2 is "bushi":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to true
+				execute console command "/prefix %arg 1% &eBushi"
+			if arg 2 is "daimyo":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				set {grade.daimyo.%uuid of arg 1%} to false
+				set {grade.shogun.%uuid of arg 1%} to false
+				set {grade.kyoshin.%uuid of arg 1%} to false				
+				execute console command "/prefix %arg 1% &bDaimyo"
+			if arg 2 is "shogun":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				set {grade.daimyo.%uuid of arg 1%} to false
+				set {grade.shogun.%uuid of arg 1%} to true
+				set {grade.kyoshin.%uuid of arg 1%} to false	
+				execute console command "/prefix %arg 1% &cShogun"
+			if arg 2 is "kyoshin":
+				set {grade.joueur.%uuid of arg 1%} to false
+				set {grade.helper.%uuid of arg 1%} to false
+				set {grade.mod.%uuid of arg 1%} to false
+				set {grade.dev.%uuid of arg 1%} to false
+				set {grade.admin.%uuid of arg 1%} to false
+				set {grade.daimyo.%uuid of arg 1%} to false
+				set {grade.shogun.%uuid of arg 1%} to false
+				set {grade.kyoshin.%uuid of arg 1%} to true	
+				execute console command "/prefix %arg 1% &e&kio &f&lKyo&e&lshin &e&kio &f&l"
+			if arg 2 is "Fondateur":
+				execute console command "/prefix %arg 1% &4Fondateur"
+			
+
+	
+ 
+on join:
+	if {prefix.%UUID of player%} is not set:
+		set {prefix.%UUID of player%} to "&7Lowasien"
+	set player tab name to "%{prefix.%UUID of player%}% %player%"
+ 
+command /prefix [<player>] [<text>]:
+	permission: prefix.set
+	permission message: &cTu n'as pas la permission de faire cela !
+	executable by : console and player
+	trigger:
+		if arg 1 is not set:
+			send "&cSyntaxe: /prefix <joueur> <prefix>"
+			stop
+		if arg 1 is set:
+			if arg 2 is set:
+				set {prefix.%UUID of arg 1%} to arg 2 
+				replace all "&" in {prefix.%UUID of arg 1%} with "§"
+				send "&aVous avez défini un nouveau préfix à &f%arg 1% : %{prefix.%UUID of arg 1%}%"
+				set arg 1 tab name to "%{prefix.%UUID of arg 1%}% %arg 1%"
+			if arg 2 is not set:
+				send "&cSyntaxe: /prefix <joueur> <prefix>"
+				stop
+ 
+ 
+#PREFIX PAS DE MOI : https://www.youtube.com/watch?v=mqVxg56LmL0&t=29s
+ 
+ 
+on chat:
+	if {grade.joueur.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &7Lowasien %player% &f>> &7%message%"
+	if {grade.helper.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &&1Jizamurai %player% &f>> &7%message%"
+	if {grade.mod.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &dMusha %player% &f>> &7%message%"
+	if {grade.dev.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &aAshigaru %player% &f>> &7%message%"
+	if {grade.admin.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &eBushi %player% &f>> &7%message%"
+	if {grade.daimyo.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &bDaimyo %player% &f>> &7%message%"
+	if {grade.shogun.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &cShogun %player% &f>> &7%message%"
+	if {grade.kyoshin.%uuid of player%} is true:
+		cancel event 
+		broadcast "&7fac &f&lKyo&e&lshin &f&l%player% &f>> &7%message%"
