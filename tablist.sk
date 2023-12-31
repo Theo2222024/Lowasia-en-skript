@@ -1,0 +1,22 @@
+options:
+	TabListHa: "&2&lLowasia &f* &a&lPVP/Factions Semi-Cheat||&7PVP/Factions Semi-Cheat N°1 Français depuis 2018 !"
+	TabListBa: "&e* &6HYM-NETWORK &e*||&6-> &eplay.lowasia.fr||&4-> &cplay.worldofskill.fr||&1-> &bplay.skyofskill.fr||&2-> &aplay.planetpvp.fr"
+	
+on join:
+	execute player command "/tablist refresh"
+	
+on quit:
+	execute player command "/tablist refresh"
+	
+on kick:
+	execute player command "/tablist refresh"
+	
+	
+command /tablist refresh:
+	executable by: player and console
+	trigger:
+		loop all players:
+			set tab header to {@TabListHa} and footer to {@TabListBa} for loop-player
+		if command sender is not console:
+			send " " to the command sender
+			
